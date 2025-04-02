@@ -11,7 +11,7 @@ def unpickle(file):
         dict = pickle.load(fo, encoding='bytes')
     return dict
 
-def augmentation(img, crop_size): 
+def augmentation(img): 
     # pad to 40x40 (4 pixels on each side)
     img = np.pad(img, ((0, 0), (4, 4), (4, 4)), mode='reflect') # [3, 40, 40]
     
@@ -71,8 +71,8 @@ class CIFAR10(Dataset):
             # data augmentation
             img = augmentation(img)
             
-        img = torch.from_numpy(img)
-        img = (img - torch.from_numpy(self.mean)) / torch.from_numpy(self.std) # normalize
+        img = torch.from_numpy(img).float()
+        img = (img - torch.from_numpy(self.mean).float()) / torch.from_numpy(self.std).float() # normalize
         
         return img, label
     
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     print(f'Labels shape: {labels.shape}')  # should be [128]
 
     # save an example image (denormalize for visualization)
-    img = images[0].numpy().transpose(1, 2, 0)
+    img = images[0].numpy() # [3, 32, 32]
     mean = np.array([0.4914, 0.4822, 0.4465]).reshape(3, 1, 1)
     std = np.array([0.2023, 0.1994, 0.2010]).reshape(3, 1, 1)
     img = (img * std + mean)

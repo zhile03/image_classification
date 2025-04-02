@@ -29,7 +29,8 @@ def train(model, dataloader, criterion, device, optimizer, scheduler, iteration,
         if iteration >= max_iterations:
             break
         
-        images, labels = images.to(device), labels.to(device)
+        images = images.float().to(device)
+        labels = labels.to(device)
         optimizer.zero_grad()
         outputs = model(images)
         loss = criterion(outputs, labels)
@@ -56,7 +57,8 @@ def test(model, dataloader, criteria, device):
     
     with torch.no_grad():
         for images, labels in dataloader:
-            images, labels = images.to(device), labels.to(device)
+            images = images.float().to(device)
+            labels = labels.to(device)
             outputs = model(images)
             loss = criteria(outputs, labels)
             
@@ -200,7 +202,7 @@ if __name__ == '__main__':
             save_checkpoints(iteration, opt.save_dir, model, optimizer)
           
         with open(results_file, 'a') as f:
-            f.write(f"{iteration} | {current_lr:.5f} | {train_loss} | {valid_loss} | {accuracy:.5f} | {t2-t0:.1f}\n")
+            f.write(f"{iteration} | {current_lr:.5f} | {train_loss:.5f} | {valid_loss:.5f} | {accuracy:.5f} | {t2-t0:.1f}\n")
         
     # plot metrics after training
     plot_metrics(train_losses, valid_accuracies, learning_rates, opt.save_dir)

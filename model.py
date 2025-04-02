@@ -22,12 +22,12 @@ class ResidualBlock(nn.Module):
           nn.BatchNorm2d(out_channels)
       )
     
-    def forward(self, x):
-      out = self.relu(self.bn1(self.conv1(x)))
-      out = self.bn2(self.conv2(out)) 
-      out += self.shortcut(x) # residual learning
-      out = self.relu(out)
-      return out
+  def forward(self, x):
+    out = self.relu(self.bn1(self.conv1(x)))
+    out = self.bn2(self.conv2(out)) 
+    out += self.shortcut(x) # residual learning
+    out = self.relu(out)
+    return out
 
 class ResNet(nn.Module):
   def __init__(self, n=3):

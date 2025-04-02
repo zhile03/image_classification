@@ -1,0 +1,8 @@
+save_dir: exp/first-try
+batch_size: 128
+num_workers: 8
+n: 3
+total_iterations: 64000
+data_dir: ./cifar-10-batches-py
+resume: false
+resume_weight: ''
