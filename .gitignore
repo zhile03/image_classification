@@ -1,5 +1,8 @@
 cifar-10-batches-py/
 cifar-100-python/
+.idea/
+.DS_Store/
+__pycache__/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
